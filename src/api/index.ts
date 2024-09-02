@@ -1,6 +1,6 @@
 import express, { Router } from 'express';
 import api_v1 from './v1';
-import MessageResponse from '../interfaces/MessageResponse';
+import MessageResponse from '../interfaces/types/MessageResponse';
 
 const router: Router = express.Router();
 

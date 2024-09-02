@@ -1,16 +1,20 @@
-export class User {
-  createUser() {}
+import express from 'express';
+import { registerUserController } from './controller';
+import { verifyFirebaseToken } from '../../../middlewares/auth/verifyFirebaseToken';
 
-  validateUser() {}
+const router = express.Router();
+router.use(verifyFirebaseToken);
 
-  updateUserData() {}
-}
+router.get('/', (req, res) => {
+  res.json({ message: 'Your request url is incomplete!' });
+});
 
-interface UserProperties {
-  uid: string;
-  username: string | null;
-  email: string;
-  locale: string;
-  profilePhoto: string;
-  passwordHas: string;
-}
+router.post('/register', async (req, res) => {
+  registerUserController(req, res);
+});
+
+router.delete('/delete', async (req, res) => {});
+
+router.patch('/update', async (req, res) => {});
+
+export default router;

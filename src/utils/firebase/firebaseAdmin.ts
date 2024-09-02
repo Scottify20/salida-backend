@@ -8,7 +8,7 @@ if (!admin.apps.length) {
   //   process.env.NODE_ENV === 'production'
   //     ? JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT_KEY || '{}')
   //     : require(process.env.FIREBASE_SERVICE_ACCOUNT_KEY_PATH || '');
-  const serviceAccount = require('../../serviceAccountKey.json');
+  const serviceAccount = require('../../../secrets/serviceAccountKey.json');
 
   admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),

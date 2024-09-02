@@ -1,5 +1,5 @@
 import app from './app';
-import { db } from './utils/firebaseAdmin';
+import { db } from './utils/firebase/firebaseAdmin';
 const port = process.env.PORT || 3000;
 
 // (async function addUser() {

@@ -5,10 +5,10 @@ import hpp from 'hpp';
 import morgan from 'morgan';
 require('dotenv').config();
 
-import corsDomainWhitelistOptions from './middlewares/corsWhitelist';
+import corsDomainWhitelistOptions from './middlewares/auth/corsWhitelist';
 import api from './api';
-import errorHandler from './middlewares/errorHandler';
-import notFound from './middlewares/notFound';
+import errorHandler from './middlewares/error_handling/errorHandler';
+import notFound from './middlewares/error_handling/notFound';
 // import DOMPurify from 'dompurify';
 // import { JSDOM } from 'jsdom';
 // import rateLimit from 'express-rate-limit';
