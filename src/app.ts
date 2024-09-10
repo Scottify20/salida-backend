@@ -31,7 +31,7 @@ app.use(express.json());
 app.use('/api', api);
 
 app.get('/', (req: Request, res: Response) => {
-  res.json('Hi there!');
+  res.status(200).json('Hi there!');
 });
 
 app.use(notFound);

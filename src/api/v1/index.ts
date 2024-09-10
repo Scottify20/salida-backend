@@ -1,20 +1,23 @@
 import express, { Router } from 'express';
-import tmdb from './tmdb/tmdb';
-import users from './users/index';
 import MessageResponse from '../../interfaces/types/MessageResponse';
 import filterUndefinedNullProps from '../../middlewares/data_transform/filterUndefinesNullProps';
+import protected_route from './protected/index';
+import public_route from './public/index';
 
 const router: Router = express.Router();
 
 router.use(filterUndefinedNullProps);
-router.use('/tmdb', tmdb);
-router.use('/users', users);
+
+// public routes (requests from users that are not logged in or dont have an account yet)
+// still requires requests to come from the salida website
+router.use('/public', public_route);
+
+// protected routes (requests from logged in users only)
+router.use('/protected', protected_route);
 
 router.get<{}, MessageResponse>('/', (req, res) => {
   res.setHeader('Content-Type', 'application/json');
   res.json({ message: 'Welcome to salida API Version 1👋' });
 });
-
-router.post('/register', () => {});
 
 export default router;

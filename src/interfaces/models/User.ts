@@ -2,10 +2,11 @@ import { UserPreferences } from './UserPreferences';
 
 export interface UserInFireStore {
   uid: string;
-  password?: string;
   passwordHash?: string;
+  password?: string;
   email?: string;
   displayName?: string;
+  username?: string;
   photoURL?: string;
   phoneNumber?: string;
   providerData: SignInProvider[];

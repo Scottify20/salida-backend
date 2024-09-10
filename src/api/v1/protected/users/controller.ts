@@ -1,9 +1,10 @@
 import { Request, Response } from 'express';
-import { getUserFromAuth } from '../../../services/firebase/firebaseAuthService';
+import { getUserFromAuth } from '../../../../services/firebase/firebaseAuthService';
 import {
   addUserToFirestore,
+  getUserDataByUsernameFromFirestore,
   getUserFromFirestore,
-} from '../../../services/firebase/firebaseFirestoreService';
+} from '../../../../services/firebase/firebaseFirestoreService';
 
 export async function registerUserController(req: Request, res: Response) {
   const userData = req.body;
@@ -46,5 +47,27 @@ export async function registerUserController(req: Request, res: Response) {
     res.status(500).json({ message: `Failed to add user with uid: ${userData.uid} to Firestore.` });
     console.log(`Failed to add user with uid: ${userData.uid} to Firestore.`);
     return;
+  }
+}
+
+export async function getUserDataController(req: Request, res: Response) {
+  const username: string = req.body.username || null;
+  if (!username) {
+    return res.status(400).json({ message: `Please provide a username.` });
+  }
+
+  try {
+    const userData = await getUserDataByUsernameFromFirestore(username);
+
+    if (!userData) {
+      return res.status(404).json({ message: `User with username: ${username} does not exist.` });
+    }
+
+    res.status(200).json({
+      message: `User with username ${username} found.`,
+      data: userData,
+    });
+  } catch {
+    res.status(500).json({ message: 'Internal server error.' });
   }
 }
