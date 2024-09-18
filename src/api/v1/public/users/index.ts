@@ -3,7 +3,7 @@ import { getUserEmailsByUsernameController } from './controller';
 
 const router = express.Router();
 
-router.get('/get-emails', async (req, res) => {
+router.get('/:username/emails', async (req, res) => {
   getUserEmailsByUsernameController(req, res);
 });
 

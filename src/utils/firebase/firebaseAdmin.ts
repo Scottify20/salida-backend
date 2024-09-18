@@ -16,8 +16,6 @@ if (!admin.apps.length) {
   });
 }
 
-console.log('running firebase');
-
 const db = admin.firestore();
 const auth = admin.auth();
 

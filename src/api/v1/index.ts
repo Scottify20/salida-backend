@@ -1,8 +1,8 @@
 import express, { Router } from 'express';
-import MessageResponse from '../../interfaces/types/MessageResponse';
 import filterUndefinedNullProps from '../../middlewares/data_transform/filterUndefinesNullProps';
 import protected_route from './protected/index';
 import public_route from './public/index';
+import { SalidaResponse } from '../../interfaces/types/SalidaResponse';
 
 const router: Router = express.Router();
 
@@ -15,7 +15,7 @@ router.use('/public', public_route);
 // protected routes (requests from logged in users only)
 router.use('/protected', protected_route);
 
-router.get<{}, MessageResponse>('/', (req, res) => {
+router.get<{}, SalidaResponse>('/', (req, res) => {
   res.setHeader('Content-Type', 'application/json');
   res.json({ message: 'Welcome to salida API Version 1👋' });
 });

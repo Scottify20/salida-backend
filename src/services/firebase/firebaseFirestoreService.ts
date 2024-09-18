@@ -2,7 +2,7 @@ import { db } from '../../utils/firebase/firebaseAdmin';
 
 import { UserInFireStore } from '../../interfaces/models/User';
 
-export async function addUserToFirestore(userData: UserInFireStore): Promise<boolean> {
+export async function addUserDataToFirestore(userData: UserInFireStore): Promise<boolean> {
   try {
     await db.collection('users').doc(userData.uid).set(userData);
     return true;
@@ -12,7 +12,7 @@ export async function addUserToFirestore(userData: UserInFireStore): Promise<boo
   }
 }
 
-export async function getUserFromFirestore(uid: string): Promise<UserInFireStore | null> {
+export async function getUserDataFromFirestore(uid: string): Promise<UserInFireStore | null> {
   try {
     const query = db.collection('users').where('uid', '==', uid);
     const snapshot = await query.get();
@@ -61,14 +61,21 @@ export async function getUserEmailsByUsernameFromFirestore(
     const emails: (string | null)[] = [];
     emails.push(userData.email ? userData.email : null);
 
-    userData.providerData.forEach((provData) => {
-      provData.email ? emails.push(provData.email) : '';
-    });
+    if (userData.providerData) {
+      userData.providerData.forEach((provData) => {
+        provData.email ? emails.push(provData.email) : '';
+      });
+    }
 
     const nullFilteredEmails = emails.filter((email) => email != null);
 
-    return nullFilteredEmails.length > 0 ? nullFilteredEmails : null;
+    return nullFilteredEmails.length > 0
+      ? nullFilteredEmails
+      : nullFilteredEmails.length == 0
+      ? ([] as string[])
+      : null;
   } catch (error) {
+    console.log(error);
     throw error;
   }
 }

@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
 import { getUserFromAuth } from '../../../../services/firebase/firebaseAuthService';
 import {
-  addUserToFirestore,
+  addUserDataToFirestore,
   getUserDataByUsernameFromFirestore,
-  getUserFromFirestore,
+  getUserDataFromFirestore,
 } from '../../../../services/firebase/firebaseFirestoreService';
 
 export async function registerUserController(req: Request, res: Response) {
@@ -29,7 +29,7 @@ export async function registerUserController(req: Request, res: Response) {
   }
 
   // Check if user already exists in Firestore
-  const userInFirestore = await getUserFromFirestore(userData.uid);
+  const userInFirestore = await getUserDataFromFirestore(userData.uid);
 
   if (userInFirestore) {
     res.status(400).json({ message: 'User already exists in Firestore.' });
@@ -37,7 +37,7 @@ export async function registerUserController(req: Request, res: Response) {
   }
 
   // Add user to Firestore only if not already present
-  const userAdded = await addUserToFirestore(userData);
+  const userAdded = await addUserDataToFirestore(userData);
 
   if (userAdded) {
     console.log(`Added user with uid: ${userData.uid} to Firestore.`);
